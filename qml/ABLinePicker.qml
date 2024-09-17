@@ -206,6 +206,7 @@ Dialog {
 
             onVisibleChanged: {
                 if (visible === true) {
+                    height = 550
                     a_set = false;
                     a_stuff.visible = true;
                     b_stuff.visible = false
@@ -497,7 +498,8 @@ Dialog {
                onClicked: {
                    newLineName.visible = true
                    newLineName.generate_ab_name(abSetter.heading_degrees)
-                   abSetter.visible = false
+                   abSetter.height = newLineName.height //poor way to hide the absetter.
+                   //however I don't care, as this will all go with v6
                }
             }
             LineName{
@@ -511,6 +513,7 @@ Dialog {
                     //go back to A/B dialog
                     //do nothing
                     abSetter.visible = true
+                    abSetter.height = 550
                 }
 
                 onAccepted: {
@@ -609,8 +612,8 @@ Dialog {
                         text: model.name
                         font.pixelSize: 25
                         font.bold: true
-                        //color: control.checked ? aog.backgroundColor : aog.blackDayWhiteNight
-                        color: control.checked ? aog.blackDayWhiteNight : aog.backgroundColor
+                        color:aog.blackDayWhiteNight
+
                         z: 2
                     }
                 }
