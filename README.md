@@ -1,3 +1,11 @@
+Warning to all Developers!!
+==========================
+This branch is fixes for the "old" v5 lines/curves fixes. It must *never*
+be merged into any other branch. Will break things, and cause merge conflicts.
+But this is the branch to use for field testing.
+
+It will be deleted when the main is updated to use the v6 tracks.
+
 QtAgOpenGPS
 ===========
 Ag Precision Mapping and Section Control Software
