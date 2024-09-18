@@ -679,6 +679,7 @@ Window {
                 Layout.alignment: Qt.AlignCenter
 				implicitWidth: theme.buttonSize
 				implicitHeight: theme.buttonSize
+                visible: false
                 onClicked: {
                     abCurvePicker.visible = true
                     if (aog.currentABCurve > -1) {
@@ -738,6 +739,7 @@ Window {
 
             IconButton{
                 id: btnABLineCycle
+                visible: false
                 icon.source: "/images/ABLineCycle.png"
                 width: btnABLine.width
                 height: btnABLine.height
@@ -747,6 +749,7 @@ Window {
             }
             IconButton{
                 id: btnABLineCycleBk
+                visible: false
                 icon.source: "/images/ABLineCycleBk.png"
                 width: btnABLine.width
                 height: btnABLine.height
@@ -801,12 +804,13 @@ Window {
             }
             IconButtonText {
                 id: btnAutoYouTurn
+                visible: false
                 isChecked: aog.isYouTurnBtnOn
                 checkable: true
                 icon.source: "/images/YouTurnNo.png"
                 iconChecked: "/images/YouTurn80.png"
                 buttonText: "AutoUturn"
-                visible: aog.isTrackOn
+                //visible: aog.isTrackOn
                 enabled: aog.isAutoSteerBtnOn
                 onClicked: aog.autoYouTurn()
                 Layout.alignment: Qt.AlignCenter
@@ -905,6 +909,7 @@ Window {
 			}
             ComboBox {
                 id: skips
+                visible: false
                 editable: true
                 Layout.alignment: Qt.AlignCenter
 				implicitWidth: theme.buttonSize
@@ -931,6 +936,7 @@ Window {
             }
             IconButtonText {
                 id: btnYouSkip
+                visible: false
                 isChecked: false
                 checkable: true
                 icon.source: "/images/YouSkipOff.png"
@@ -974,6 +980,7 @@ Window {
                 Layout.alignment: Qt.AlignCenter
 				implicitWidth: theme.buttonSize
 				implicitHeight: theme.buttonSize
+                visible: false
             }
             IconButtonText {
                 property bool isOn: false
@@ -1013,6 +1020,7 @@ Window {
                 Layout.alignment: Qt.AlignCenter
 				implicitWidth: theme.buttonSize
 				implicitHeight: theme.buttonSize
+                visible: false
                 onPressAndHold: {
                     if (contextFlag.visible) {
                         contextFlag.visible = false;
@@ -1025,6 +1033,7 @@ Window {
 
             IconButtonText {
                 id: btnTrackOn
+                visible: false
                 icon.source: "/images/TrackOn.png"
                 buttonText: "Track"
                 onClicked: trackButtons.visible = !trackButtons.visible
