@@ -1177,7 +1177,7 @@ Window {
 				anchors.left: parent.left
 				anchors.topMargin: 30
 				anchors.leftMargin: 150
-				visible: aog.isAutoSteerBtnOn
+				visible: false
                 Comp.IconButtonTransparent{
 					implicitHeight: 65 * theme.scaleHeight
 					implicitWidth: 85 * theme.scaleWidth
