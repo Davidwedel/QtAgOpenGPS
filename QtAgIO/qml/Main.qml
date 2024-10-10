@@ -118,6 +118,7 @@ Window {
 				 implicitHeight: btnNTRIP.height
 				 text: qsTr("Settings")
 				 icon.source: imagePath + "Settings48.png"
+                 onClicked: settingsWindow.visible = true
 			 }
              Comp.IconButton {
 				 id: btnNTRIP
@@ -157,5 +158,16 @@ Window {
     }
     AgDiag {
         id: agdiag
+    }
+
+    SettingsWindow{
+        id: settingsWindow
+        visible: false
+    }
+    AdvancedMenu{
+        id: advancedMenu
+        function showMenu(){
+            advancedMenu.visible = true
+        }
     }
 }
