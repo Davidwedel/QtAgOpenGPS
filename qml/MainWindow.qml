@@ -1038,6 +1038,34 @@ Window {
 				implicitHeight: theme.buttonSize
             }
 
+            Comp.IconButtonTransparent{
+                icon.source: "/images/SnapToPivot.png"
+                Layout.alignment: Qt.AlignCenter
+                implicitWidth: theme.buttonSize
+                implicitHeight: theme.buttonSize
+                visible: btnABLine.checked
+                onClicked: aog.snapToPivot()
+            }
+
+
+            Comp.IconButtonTransparent{
+                icon.source: "/images/SnapLeft.png"
+                Layout.alignment: Qt.AlignCenter
+                implicitWidth: theme.buttonSize
+                implicitHeight: theme.buttonSize
+                visible: btnABLine.checked
+                onClicked: aog.snapSideways(-19)//7.5 inch
+            }
+            Comp.IconButtonTransparent{
+                icon.source: "/images/SnapRight.png"
+                Layout.alignment: Qt.AlignCenter
+                implicitWidth: theme.buttonSize
+                implicitHeight: theme.buttonSize
+                visible: btnABLine.checked
+                onClicked: aog.snapSideways(19) //ditto
+            }
+
+
         }
         //----------------inside buttons-----------------------
         Item{

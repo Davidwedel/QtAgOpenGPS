@@ -167,7 +167,7 @@ Item {
     //on-screen buttons
 
     //snap track buttons
-    signal snapSideways(double distance)//positive, right, negative, left
+    signal snapSideways(double distance)//negative, right, positive, left
     signal snapToPivot()
 
     //DisplayButtons.qml
