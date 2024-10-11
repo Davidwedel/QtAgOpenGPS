@@ -704,11 +704,20 @@ void FormGPS::onBtnResetSim_clicked(){
 }
 
 //Track Snap buttons
+//I suppose this function could run through the SnapSideways
+//function
 void FormGPS::onBtnSnapToPivot_clicked(){
     qDebug()<<"snap to pivot";
+    if(ABLine.isBtnABLineOn)
+        ABLine.MoveABLine(ABLine.distanceFromCurrentLinePivot);
+    else if (curve.isBtnCurveOn)
+        curve.MoveABCurve(curve.distanceFromCurrentLinePivot);
+    else
+        TimedMessageBox(2000, tr("No Guidance Lines"), tr("Turn On Contour Or Make AB Line"));
 }
 void FormGPS::onBtnSnapSideways_clicked(double distance){
-    int blah = distance;
+    yt.ResetCreatedYouTurn();
+    ABLine.MoveABLine(distance);
 
 }
 
