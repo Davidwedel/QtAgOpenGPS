@@ -1054,7 +1054,7 @@ Window {
                 implicitWidth: theme.buttonSize
                 implicitHeight: theme.buttonSize
                 visible: btnABLine.checked
-                onClicked: aog.snapSideways(-19)//7.5 inch
+                onClicked: aog.snapSideways(19)//7.5 inch
             }
             Comp.IconButtonTransparent{
                 icon.source: "/images/SnapRight.png"
@@ -1062,7 +1062,7 @@ Window {
                 implicitWidth: theme.buttonSize
                 implicitHeight: theme.buttonSize
                 visible: btnABLine.checked
-                onClicked: aog.snapSideways(19) //ditto
+                onClicked: aog.snapSideways(-19) //ditto
             }
 
 
