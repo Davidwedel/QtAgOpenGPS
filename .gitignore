@@ -9,4 +9,6 @@ compile_commands.json
 .xcf
 Makefile
 build*
+cmkbuild*
 branchnotes.txt
+__pycache__

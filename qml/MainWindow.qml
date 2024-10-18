@@ -661,8 +661,42 @@ Window {
                                   width = children.width
 
             Comp.IconButtonText {
+                property bool isContourLockedByUser //store if user locked
+                id: btnContourLock
+                isChecked: aog.btnIsContourLocked
+                visible: btnContour.checked
+                checkable: true
+                icon.source: "/images/ColorUnlocked.png"
+                iconChecked: "/images/ColorLocked.png"
+                implicitWidth: theme.buttonSize
+                implicitHeight: theme.buttonSize
+                buttonText: "Lock"
+                //color: "white"
+                Layout.alignment: Qt.AlignCenter
+                onClicked: {
+                    aog.btnContourLock()
+                    if (aog.btnIsContourLocked)
+                        isContourLockedByUser = true
+                }
+                Connections{
+                    target: aog
+                    function onBtnIsContourLockedChanged() {
+                        btnContourLock.checked = aog.btnIsContourLocked
+                        if(btnContourLock.isContourLockedByUser)
+                            btnContourLock.isContourLockedByUser = false
+                    }
+                    function onIsAutoSteerBtnOnChanged() {
+                        if (!btnContourLock.isContourLockedByUser && btnContour.checked === true){
+                            if(btnContourLock.checked !== aog.isAutoSteerBtnOn){
+                                aog.btnContourLock()
+                            }
+                        }
+                    }
+                }
+            }
+            Comp.IconButtonText {
                 id: btnContour
-                isChecked: false
+                isChecked: aog.isContourBtnOn //set value from backend
                 checkable: true
                 icon.source: "/images/ContourOff.png"
                 iconChecked: "/images/ContourOn.png"
@@ -672,8 +706,12 @@ Window {
                 //color: "white"
                 Layout.alignment: Qt.AlignCenter
                 onClicked: {
+                    aog.btnContour()
+                }
+                onCheckedChanged: { //gui logic
+                    btnABLineCycle.visible = !checked
+                    btnABLineCycleBk.visible = !checked
                     btnContourPriority.visible = checked
-                    aog.btnContour(checked)
                 }
             }
             Comp.IconButtonText{
@@ -721,6 +759,7 @@ Window {
 				implicitWidth: theme.buttonSize
 				implicitHeight: theme.buttonSize
                 Layout.alignment: Qt.AlignCenter
+                visible: !btnContour.checked
                 onClicked: {
                     abLinePicker.visible = true
                     if (aog.currentABLine > -1)
@@ -830,18 +869,18 @@ Window {
                 iconChecked: "/images/AutoSteerOn.png"
                 checkable: true
                 checked: aog.isAutoSteerBtnOn
-                enabled: aog.isTrackOn
-                //Is remote activation of autosteer enabled?
+                enabled: aog.isTrackOn || aog.isContourBtnOn
+                //Is remote activation of autosteer enabled? //todo. Eliminated in 6.3.3
                 buttonText: (settings.setAS_isAutoSteerAutoOn === true ? "R" : "M")
                 Layout.alignment: Qt.AlignCenter
 				implicitWidth: theme.buttonSize
 				implicitHeight: theme.buttonSize
                 onClicked: {
-                    if (checked && ((aog.currentABCurve > -1) || (aog.currentABLine > -1))) {
+                    if (checked && ((aog.currentABCurve > -1) || (aog.currentABLine > -1) || btnContour.isChecked)) {
                         console.debug("okay to turn on autosteer button.")
                         aog.isAutoSteerBtnOn = true;
                     } else {
-                        console.debug("keep autoster button off.")
+                        console.debug("keep autosteer button off.")
                         checked = false;
                         aog.isAutoSteerBtnOn = false;
                     }
@@ -961,6 +1000,7 @@ Window {
                 onClicked: aog.btnResetTool()
 				implicitWidth: theme.buttonSize
 				implicitHeight: theme.buttonSize
+                visible: settings.setTool_isToolTrailing === true //hide if front or rear 3 pt
             }
             Comp.IconButtonText {
                 id: btnSectionMapping
