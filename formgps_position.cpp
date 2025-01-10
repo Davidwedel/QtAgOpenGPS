@@ -72,9 +72,7 @@ void FormGPS::UpdateFixPosition()
         //#region Start
 
         distanceCurrentStepFixDisplay = glm::Distance(prevDistFix, pn.fix);
-        if ((double)(fd.distanceUser += distanceCurrentStepFixDisplay) > 999) fd.distanceUser = 0;
         distanceCurrentStepFixDisplay *= 100;
-
         prevDistFix = pn.fix;
 
         if (fabs(vehicle.avgSpeed) < 1.5 && !isFirstHeadingSet)
@@ -232,48 +230,47 @@ void FormGPS::UpdateFixPosition()
         double camDelta;
         double gyroDelta;
 
-        //imu on board
-        if (ahrs.imuHeading != 99999)
-        {
-            //check for out-of bounds fusion weights in case config
-            //file was edited and changed inappropriately.
-            //TODO move this sort of thing to FormGPS::load_settings
-            if (ahrs.fusionWeight > 0.4) ahrs.fusionWeight = 0.4;
-            if (ahrs.fusionWeight < 0.2) ahrs.fusionWeight = 0.2;
+		//how far since last fix
+		distanceCurrentStepFix = glm::Distance(stepFixPts[0], pn.fix);
 
-            //how far since last fix
-            distanceCurrentStepFix = glm::Distance(stepFixPts[0], pn.fix);
+		if (distanceCurrentStepFix < gpsMinimumStepDistance)
+		{
+			goto byPass;
+		}
 
-            if (distanceCurrentStepFix < gpsMinimumStepDistance)
-            {
-                goto byPass;
-            }
+		//save a copy of previous for jump test
+		//jumpFix.easting = stepFixPts[0].easting; jumpFix.northing = stepFixPts[0].northing;
 
-            //userDistance can be reset
+		if ((fd.distanceUser += distanceCurrentStepFix) > 9999) fd.distanceUser = 0;
 
-            minFixHeadingDistSquared = minHeadingStepDist * minHeadingStepDist;
-            fixToFixHeadingDistance = 0;
+		minFixHeadingDistSquared = minHeadingStepDist * minHeadingStepDist;
 
-            for (int i = 0; i < totalFixSteps; i++)
-            {
-                fixToFixHeadingDistance = glm::DistanceSquared(stepFixPts[i], pn.fix);
-                currentStepFix = i;
+		fixToFixHeadingDistance = 0;
 
-                if (fixToFixHeadingDistance > minFixHeadingDistSquared)
-                {
-                    break;
-                }
-            }
+		for (int i = 0; i < totalFixSteps; i++)
+		{
+			fixToFixHeadingDistance = glm::DistanceSquared(stepFixPts[i], pn.fix);
+			currentStepFix = i;
 
-            if (fixToFixHeadingDistance < (minFixHeadingDistSquared * 0.5))
-                goto byPass;
+			if (fixToFixHeadingDistance > minFixHeadingDistSquared)
+			{
+				break;
+			}
+		}
 
-            newGPSHeading = atan2(pn.fix.easting - stepFixPts[currentStepFix].easting,
-                                              pn.fix.northing - stepFixPts[currentStepFix].northing);
-            if (newGPSHeading < 0) newGPSHeading += glm::twoPI;
+		if (fixToFixHeadingDistance < (minFixHeadingDistSquared * 0.5))
+			goto byPass;
 
-            if (ahrs.isReverseOn)
-            {
+		newGPSHeading = atan2(pn.fix.easting - stepFixPts[currentStepFix].easting,
+				pn.fix.northing - stepFixPts[currentStepFix].northing);
+		if (newGPSHeading < 0) newGPSHeading += glm::twoPI;
+
+		//imu on board
+		if (ahrs.imuHeading != 99999)
+		{
+
+			if (ahrs.isReverseOn)
+			{
                 ////what is angle between the last valid heading before stopping and one just now
                 delta = fabs(M_PI - fabs(fabs(newGPSHeading - imuCorrected) - M_PI));
 

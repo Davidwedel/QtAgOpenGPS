@@ -380,6 +380,7 @@ public:
 
     //history
     Vec2 prevFix;
+	Vec2 prevJumpFix;
     Vec2 prevDistFix;
     Vec2 lastReverseFix;
 
