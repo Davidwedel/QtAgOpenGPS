@@ -67,6 +67,14 @@ most desirable target will be Android some day.
 
 Notes on the Port
 -----------------
+QtAOG:
+Tracking: 6.3.3
+Target: 6.3.3
+git diff commit: 
+QtAgIO:
+Tracking: 6.6.0
+Target: 6.6.0
+git diff commit(AOG commit): 7b6259ec3fb270d2dc862aa0c7a211480696a431
 This port is as close to a 1:1 transliteration of the C# code as
 possible, using Qt to drive the GUI, and C++ and Qt together to replace
 the C# GUI components.  Being such a direct translation, the code has
