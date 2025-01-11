@@ -356,33 +356,6 @@ void FormGPS::UpdateFixPosition()
         }
         else
         {
-            //how far since last fix
-            distanceCurrentStepFix = glm::Distance(stepFixPts[0], pn.fix);
-
-            if (distanceCurrentStepFix < (gpsMinimumStepDistance))
-                goto byPass;
-
-            minFixHeadingDistSquared = minHeadingStepDist * minHeadingStepDist;
-            fixToFixHeadingDistance = 0;
-
-            for (int i = 0; i < totalFixSteps; i++)
-            {
-                fixToFixHeadingDistance = glm::DistanceSquared(stepFixPts[i], pn.fix);
-                currentStepFix = i;
-
-                if (fixToFixHeadingDistance > minFixHeadingDistSquared)
-                {
-                    break;
-                }
-            }
-
-            if (fixToFixHeadingDistance < minFixHeadingDistSquared * 0.5)
-                goto byPass;
-
-            newGPSHeading = atan2(pn.fix.easting - stepFixPts[currentStepFix].easting,
-                                              pn.fix.northing - stepFixPts[currentStepFix].northing);
-            if (newGPSHeading < 0) newGPSHeading += glm::twoPI;
-
             if (ahrs.isReverseOn)
             {
 
@@ -599,7 +572,8 @@ void FormGPS::UpdateFixPosition()
         TheRest();
 
         //most recent fixes are now the prev ones
-        prevFix.easting = pn.fix.easting; prevFix.northing = pn.fix.northing;
+		//jumpFix = prevFix;
+		//prevFix = pn.fix;
 
     } else if (headingFromSource == "Dual")
     {
@@ -629,12 +603,19 @@ void FormGPS::UpdateFixPosition()
 
         //grab the most current fix and save the distance from the last fix
         distanceCurrentStepFix = glm::Distance(pn.fix, prevDistFix);
+		//jumpFix = prevDistFix;
+		prevDistFix  = pn.fix;
 
         //userDistance can be reset
-        if ((double)(fd.distanceUser += distanceCurrentStepFix) > 999) fd.distanceUser = 0;
-
         distanceCurrentStepFixDisplay = distanceCurrentStepFix * 100;
-        prevDistFix = pn.fix;
+
+		distanceCurrentStepFix = glm::Distance(prevFix, pn.fix);
+
+		if (distanceCurrentStepFix > 0.1)
+		{
+			if ((fd.distanceUser += distanceCurrentStepFix) > 9999) fd.distanceUser = 0;
+			prevFix = pn.fix;
+		}
 
         if (glm::DistanceSquared(lastReverseFix, pn.fix) > 0.20)
         {
@@ -685,27 +666,67 @@ void FormGPS::UpdateFixPosition()
     if (vehicle.fixHeading >= glm::twoPI)
         vehicle.fixHeading-= glm::twoPI;
 
+	//vec2 ptA = new vec2(jumpFix.easting - (Math.Sin(gpsHeading) * 10), jumpFix.northing - (Math.Cos(gpsHeading) * 10));
+	//vec2 ptB = new vec2(jumpFix.easting + (Math.Sin(gpsHeading) * 10), jumpFix.northing + (Math.Cos(gpsHeading) * 10));
+
+	//double dx = ptB.easting - ptA.easting;
+	////z2-z1
+	//double dy = ptB.northing - ptA.northing;
+
+	////how far from current AB Line is fix
+	//jumpDistance = ((dy * pn.fix.easting) - (dx * pn.fix.northing) 
+	//                + (ptB.easting * ptA.northing) - (ptB.northing * ptA.easting))
+	//                / Math.Sqrt((dy * dy) + (dx * dx));
+
+	//jumpDistance = Math.Abs(jumpDistance) * 100;
+
+	//if (jumpDistance > jumpDistanceMax) jumpDistanceMax = jumpDistance;
+
+	//if (jumpCounter++ > 200)
+	//{
+	//    jumpDistanceMax = jumpCounter = 0;
+	//    lblJumpDistanceMax.Text = "*";
+	//}
+
+	//if (jumpDistance > 200) jumpDistance = 0;
+
+	//if (isFirstHeadingSet && jumpDistanceAlarm > 0 && jumpDistance > jumpDistanceAlarm)
+	//{
+	//    Log.EventWriter(": " + jumpDistance.ToString("N0") + " cm");
+
+	//    if (isBtnAutoSteerOn)
+	//    {
+	//        btnAutoSteer.PerformClick();
+	//        TimedMessageBox(3000, gStr.gsAutoSteer, "Big Jump in GPS position:" + jumpDistance.ToString("N0") + " cm");
+	//        Log.EventWriter("Autosteer Off, Jump in GPS position: " + jumpDistance.ToString("N0") + " cm");
+	//    }
+
+	//}
+
+	//jumpFix.easting = pn.fix.easting;
+	//jumpFix.northing = pn.fix.northing;
+
 //#endregion
 
 //#region Corrected Position for GPS_OUT
     //NOTE: Michael, I'm not sure about this entire region
 
-    double rollCorrectedLat;
-    double rollCorrectedLon;
-    pn.ConvertLocalToWGS84(pn.fix.northing, pn.fix.easting, rollCorrectedLat, rollCorrectedLon);
+    double latitud;
+    double longitud;
+    pn.ConvertLocalToWGS84(pn.fix.northing, pn.fix.easting, latitud, longitud);
 
-    QByteArray pgnRollCorrectedLatLon(22, 0);
+    QByteArray correctedPosition(30, 0);
 
     pgnRollCorrectedLatLon[0] = 0x80;
     pgnRollCorrectedLatLon[1] = 0x81;
     pgnRollCorrectedLatLon[2] = 0x7F;
     pgnRollCorrectedLatLon[3] = 0x64;
-    pgnRollCorrectedLatLon[4] = 16;
+    pgnRollCorrectedLatLon[4] = 24;
 
-    std::memcpy(pgnRollCorrectedLatLon.data() + 5, &rollCorrectedLon, 8);
-    std::memcpy(pgnRollCorrectedLatLon.data() + 13, &rollCorrectedLat, 8);
-
-    SendPgnToLoop(pgnRollCorrectedLatLon);
+    std::memcpy(longitud.data() + 5, &correctedPostion, 8);
+    std::memcpy(latutud.data() + 13, &correctedPosition, 8);
+	std::memcpy(glm::toDegrees(gpsHeading) + 21 &correctedPosition, 8);
+    SendPgnToLoop(correctedPosition);
 
 //#endregion
 
@@ -724,7 +745,7 @@ void FormGPS::UpdateFixPosition()
         if (trk.isAutoTrack && !isAutoSteerBtnOn && trk.autoTrack3SecTimer > 1)
         {
             trk.autoTrack3SecTimer = 0;
-
+			
             trk.SwitchToClosestRefTrack(vehicle.steerAxlePos, vehicle);
         }
 
