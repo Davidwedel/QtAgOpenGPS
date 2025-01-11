@@ -69,12 +69,15 @@ Notes on the Port
 -----------------
 QtAOG:
 Tracking: 6.3.3
-Target: 6.3.3
-git diff commit: 
+Tracking Commit(AOG): c3f0d840b7f409a4dccae2e65ffc97aa1df37e1f
+Target: 6.6.0
+Target Commit(AOG): 5656cd593bcd3fabb7cdfc6b468e8b94ce567c0b
+
 QtAgIO:
 Tracking: 6.6.0
+Tracking Commit(AOG): 5656cd593bcd3fabb7cdfc6b468e8b94ce567c0b
 Target: 6.6.0
-git diff commit(AOG commit): 7b6259ec3fb270d2dc862aa0c7a211480696a431
+Target Commit(AOG): 5656cd593bcd3fabb7cdfc6b468e8b94ce567c0b
 This port is as close to a 1:1 transliteration of the C# code as
 possible, using Qt to drive the GUI, and C++ and Qt together to replace
 the C# GUI components.  Being such a direct translation, the code has
