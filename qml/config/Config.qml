@@ -15,6 +15,7 @@ import AOG
 import ".."
 import "../components"
 import "steercomponents"
+import "qrc:/qml/AOG/"
 
 Dialog {
 	x: 0

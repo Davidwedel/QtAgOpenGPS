@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Effects
 import QtQuick.Controls
 import AOG
+import "qrc:/qml/AOG/"
 
 
 Item{

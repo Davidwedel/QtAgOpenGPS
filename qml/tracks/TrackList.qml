@@ -12,6 +12,7 @@ import Interface
 import AOG
 import "../components"
 import ".."
+import "qrc:/qml/AOG/"
 
 MoveablePopup {
     //AOGInterface {

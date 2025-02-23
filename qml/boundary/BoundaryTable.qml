@@ -5,6 +5,7 @@ import QtQuick.Layouts
 import QtQuick.Controls.Fusion
 import QtQuick.Controls.Material
 import AOG
+import "qrc:/qml/AOG/"
 
 ListView {
     id: tableView

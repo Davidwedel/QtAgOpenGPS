@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import Settings
 import AOG
 import "components" as Comp
+import "qrc:/qml/AOG/"
 
 RowLayout{
     property bool hydLiftIsOn: btnHydLift.isOn

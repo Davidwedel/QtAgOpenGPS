@@ -7,6 +7,7 @@ import QtQuick.Shapes
 import Settings
 import AOG
 import "components" as Comp
+import "qrc:/qml/AOG/"
 
 Popup{
     id: headlandDesigner

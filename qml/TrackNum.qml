@@ -6,6 +6,7 @@ import QtQuick 2.0
 import AOG
 import Settings
 import "components" as Comp
+import "qrc:/qml/AOG/"
 
 Comp.OutlineText {
     id: tracknum

@@ -10,6 +10,7 @@ import AOG
 
 import ".."
 import "../components" as Comp
+import "qrc:/qml/AOG/"
 
 Comp.MoveablePopup {
     id: refNudge

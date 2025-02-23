@@ -11,6 +11,8 @@ import AOG
 
 import ".."
 import "../components"
+import "qrc:/qml/AOG/"
+
 /* todo:
   not sure about uTurn Style. setting seems to be an int.
   these don't need the SpinBoxCM thing, because they're already metric.

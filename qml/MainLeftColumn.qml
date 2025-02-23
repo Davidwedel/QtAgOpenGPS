@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import AOG
 import Settings
 import "components" as Comp
+import "qrc:/qml/AOG/"
 
 ColumnLayout {
     id: leftColumn
