@@ -7,7 +7,6 @@ import QtQuick.Controls.Fusion
 import Settings
 import AOG
 import 'components' as Comp
-import "qrc:/qml/AOG/"
 
 Rectangle {
     id: lightbar

@@ -10,7 +10,6 @@ import AOG
 
 import ".."
 import "../components"
-import "qrc:/qml/AOG/"
 
 /*todo: sections not populated from .config yet
   also not at all sure about switching these to SpinBoxCM... Don't want to break anything

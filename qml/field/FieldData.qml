@@ -10,7 +10,6 @@ import AOG
 
 import ".."
 import "../components"
-import "qrc:/qml/AOG/"
 
 Rectangle {
     id: fieldData

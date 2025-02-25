@@ -12,7 +12,6 @@ import AOG
 
 import ".."
 import "../components"
-import "qrc:/qml/AOG/"
 
 
 Window{

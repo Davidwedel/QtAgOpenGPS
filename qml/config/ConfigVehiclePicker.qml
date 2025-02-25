@@ -13,7 +13,6 @@ import AOG
 
 import ".."
 import "../components"
-import "qrc:/qml/AOG/"
 
 /*todo:
   couldn't find the setting for the polygons

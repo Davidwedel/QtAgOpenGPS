@@ -18,7 +18,6 @@ import "config" as ConfigSettings //"Config" causes errors
 import "field" as Field
 import "tracks" as Tracks
 import "components" as Comp
-import "qrc:/qml/AOG/"
 
 Window {
 

@@ -674,7 +674,5 @@
         <file>qml/wizards/ChartSteer.qml</file>
         <file>qml/wizards/Camera.qml</file>
         <file>qml/wizards/PlayerMenuBar.qml</file>
-        <file>qml/AOG/Utils.qml</file>
-        <file>qml/AOG/qmldir</file>
     </qresource>
 </RCC>

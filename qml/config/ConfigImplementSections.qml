@@ -11,7 +11,6 @@ import AOG
 
 import ".."
 import "../components"
-import "qrc:/qml/AOG/"
 
 //todo: noticed % coverage was in wrong spot
 Rectangle{

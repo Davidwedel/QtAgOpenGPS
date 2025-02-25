@@ -26,6 +26,7 @@ void FormGPS::setupGui()
 {
     /* Load the QML UI and display it in the main area of the GUI */
     setProperty("title","QtAgOpenGPS");
+    addImportPath(":/");
 
     connect(this, SIGNAL(objectCreated(QObject*,QUrl)),
             this, SLOT(on_qml_created(QObject*,QUrl)), Qt::QueuedConnection);

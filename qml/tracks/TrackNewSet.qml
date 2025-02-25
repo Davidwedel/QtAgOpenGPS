@@ -8,8 +8,6 @@ import AOG
 
 import "../components"
 import ".."
-import "qrc:/qml/AOG/"
-
 /*This is where the track is actually created*/
 
 //region SetAB

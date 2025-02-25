@@ -3,7 +3,6 @@
 import Settings
 import QtQuick
 import AOG
-import "qrc:/qml/AOG/"
 
 //This is a spinbox for displaying dimensions that are either
 //cm or inches

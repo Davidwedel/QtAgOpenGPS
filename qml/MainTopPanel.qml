@@ -4,7 +4,6 @@ import Settings
 import AOG
 import Interface
 import "components" as Comp
-import "qrc:/qml/AOG/"
 
     Rectangle{
         id: topLine

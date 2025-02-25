@@ -6,7 +6,6 @@ import QtQuick
 import QtQuick.Controls.Fusion
 import AOG
 import "components" as Comp
-import "qrc:/qml/AOG/"
 
 Rectangle{
     id: blockageData

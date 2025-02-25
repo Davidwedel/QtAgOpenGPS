@@ -2,7 +2,6 @@ import QtQuick
 import AOG
 import Settings
 import "components" as Comp
-import "qrc:/qml/AOG/"
 
 Grid{
     id: gridTurnBtns //lateral turn and manual Uturn
